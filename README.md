@@ -1,1 +1,1 @@
-PSPPack is a PlayStation Portable executable packer that can be used to create very small files (like 4k or bigger intros).
+PSPPack is a PlayStation Portable executable packer / encrypter that can be used to create very small files (like 4k or bigger intros) compatible with PSP official firmware.
