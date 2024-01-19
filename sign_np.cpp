@@ -7,10 +7,10 @@
 
 void print_usage()
 {
-	printf("Usage: PSPPack [-1..5] <input>\n\n");
+	printf("Usage: PSPPack [-1..5] [-NAME] <input>\n\n");
 	printf("[-1..5]: Number of compression passes (default: 5)\n");
-	printf("<input>: A valid ELF file\n");
-	printf("(a packed & signed EBOOT.PBP will be produced from it).\n\n");
+	printf("[-NAME]: 5 chars name (or less) to be displayed in the XMB (default: HITCH)\n");
+	printf("<input>: A valid PRX file (a packed & signed EBOOT.PBP will be produced from it).\n\n");
 }
 
 unsigned char EBOOT_Dats[] =
@@ -34,7 +34,7 @@ unsigned char EBOOT_Dats[] =
 	0x00,0x52,0x45,0x47,0x49,0x4f,0x4e,0x00,0x54,0x49,0x54,0x4c,0x45,0x00,0x00,0x00,
 	0x01,0x00,0x00,0x00,0x4d,0x47,0x00,0x00,0x55,0x43,0x4a,0x53,0x31,0x30,0x30,0x34,
 	0x31,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x31,0x2e,0x30,0x30,0x00,0x00,0x00,0x00,
-	0x01,0x00,0x00,0x00,0x32,0x2e,0x38,0x30,0x00,0x00,0x00,0x00,0x00,0x80,0x00,0x00,
+	0x01,0x00,0x00,0x00,0x32,0x2e,0x37,0x30,0x00,0x00,0x00,0x00,0x00,0x80,0x00,0x00,
 	0x48,0x49,0x54,0x43,0x48,0x00
 };
 
@@ -42,24 +42,61 @@ int main(int argc, char *argv[])
 {
 	int passes = 5;
 	int arg = 1;
-	printf("PSPPack v1.3\n");
+	int i;
+	int j;
+
+	printf("PSPPack v1.4\n");
 	printf("Written by hitchhikr of Rebels.\n\n");
 
-	if ((argc <= 1) || (argc > 3))
+	if ((argc <= 1) || (argc > 4))
 	{
 		print_usage();
 		return 1;
 	}
 	
-	if (argv[1][0] == '-')
+	for (i = 0; i < 2; i++)
 	{
-		passes = atol(&argv[1][1]);
-		if (passes <= 0 || passes > 5)
+		if (argv[arg][0] == '-')
 		{
-			printf("Error: Invalid number of passes.\n");
-			return 1;
+			if (!argv[arg][1])
+			{
+				printf("Error: Invalid argument.\n");
+				return 1;
+			}
+			if (argv[arg][1] < '1' || argv[arg][1] > '5')
+			{
+				j = 0;
+				EBOOT_Dats[320] = ' ';
+				EBOOT_Dats[321] = ' ';
+				EBOOT_Dats[322] = ' ';
+				EBOOT_Dats[323] = ' ';
+				EBOOT_Dats[324] = ' ';
+				while (argv[arg][j + 1])
+				{
+					EBOOT_Dats[320 + j] = argv[arg][j + 1];
+					j++;
+					if (j > 5)
+					{
+						printf("Error: Too many chars in argument.\n");
+						return 1;
+					}
+				}
+			}
+			else
+			{
+				passes = atol(&argv[arg][1]);
+				if (passes <= 0 || passes > 5)
+				{
+					printf("Error: Invalid number of passes.\n");
+					return 1;
+				}
+			}
+			arg++;
 		}
-		arg = 2;
+		else
+		{
+			break;
+		}
 	}
 
 	// Open files.

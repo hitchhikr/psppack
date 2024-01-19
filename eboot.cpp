@@ -79,7 +79,6 @@ void build_psp_header(PSP_Header2 *psph, u8 *ebuf, int esize)
 
 	memset(psph, 0, sizeof(PSP_Header2));
 
-    // utiliser la clé numéro 12 (ou 1 pour les umd)
 	psph->signature = 0x5053507E;
 	psph->mod_attribute = 0x200;
 	psph->comp_attribute = 1;       // gzip packed
