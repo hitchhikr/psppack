@@ -4,11 +4,6 @@
 // http://www.gnu.org/licenses/gpl-3.0.txt
 
 #include "eboot.h"
-bool compress_rfc1950_7z(const unsigned char *in_data,
-                         unsigned in_size,
-						 int passes,
-                         unsigned char *out_data,
-                         unsigned &out_size);
 
 TAG_KEY *tkey;
 u8 tag_key[0x100];
@@ -79,7 +74,11 @@ void build_psp_header(PSP_Header2 *psph, u8 *ebuf, int esize)
 
 	memset(psph, 0, sizeof(PSP_Header2));
 
-	psph->signature = 0x5053507E;
+#ifdef _BIG_ENDIAN_
+    psph->signature = 0x7E505350;
+#else
+    psph->signature = 0x5053507E;
+#endif
 	psph->mod_attribute = 0x200;
 	psph->comp_attribute = 1;       // gzip packed
 	psph->module_ver_lo = 1;
@@ -254,7 +253,6 @@ void build_psp_SHA1(u8 *ebuf, u8 *pbuf)
 int sign_eboot(u8 *eboot, int eboot_size, int passes, u8 *seboot)
 {
 	PSP_Header2 psp_header;
-	unsigned int Output_Size;
 
 	// Select tag.
 	tkey = key;
@@ -267,7 +265,12 @@ int sign_eboot(u8 *eboot, int eboot_size, int passes, u8 *seboot)
 	// Read EBOOT data.
 	memcpy(ebuf + 0x150, eboot, esize);
 	
-	if (*(u32*)(ebuf + 0x150) != 0x464C457F) {
+#ifdef _BIG_ENDIAN_
+    if (*(u32*)(ebuf + 0x150) != 0x7F454C46)
+#else
+    if (*(u32*)(ebuf + 0x150) != 0x464C457F)
+#endif
+    {
 		printf("ERROR: Invalid ELF file for EBOOT signing!\n");
 		return -1;
 	}
@@ -284,19 +287,25 @@ int sign_eboot(u8 *eboot, int eboot_size, int passes, u8 *seboot)
 	// Build ~PSP header.
 	build_psp_header(&psp_header, ebuf + 0x150, esize);
 
-    u8 *packed;
+    u8 *packed = 0;
     packed = (u8 *) malloc(esize * 2);
     memset(packed, 0, esize * 2);
 
-    Output_Size = esize * 2;
-	compress_rfc1950_7z(ebuf + 0x150, esize, passes, packed, Output_Size);
-    esize = Output_Size;
+    ZopfliOptions options;
+    unsigned char bp = 0;
+    options.numiterations = passes + 3;
+	size_t Output_Size;
+    Output_Size = 0;
+    ZopfliInitOptions(&options);
+    ZopfliGzipCompress(&options, ebuf + 0x150, esize, &packed, &Output_Size);
+
+    esize = (int) Output_Size;
 
     memcpy(ebuf + 0x150, packed, esize);
     psp_header.comp_size = esize;
 	psp_header.psp_size = ((esize + 15) & 0xfffffff0) + 0x150;
 
-	// Encrypt and sign data with KIRK1.
+	// Encrypt and sign data with KIRK.
 	build_psp_kirk1(ebuf + 0x40, (u8 *) &psp_header, esize);
 	
 	// Generate PRX tag key.
@@ -309,5 +318,6 @@ int sign_eboot(u8 *eboot, int eboot_size, int passes, u8 *seboot)
 	esize = (esize + 15) &~ 15;
 	memcpy(seboot, ebuf, esize + 0x150);
 	
+    free(packed);
 	return (esize + 0x150);
 }

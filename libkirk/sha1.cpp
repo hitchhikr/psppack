@@ -251,7 +251,7 @@ static void longReverse(UINT4 *buffer, int byteCount, int Endianness )
 {
     UINT4 value;
 
-    if (Endianness == TRUE) return;
+    if (Endianness == 1) return;
     byteCount /= sizeof( UINT4 );
     while( byteCount-- )
         {

@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -143,18 +143,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="7z\7zdeflate.cpp" />
-    <ClCompile Include="7z\Alloc.c" />
-    <ClCompile Include="7z\CopyCoder.cpp" />
-    <ClCompile Include="7z\DeflateEncoder.cpp" />
-    <ClCompile Include="7z\HuffEnc.c" />
-    <ClCompile Include="7z\LimitedStreams.cpp" />
-    <ClCompile Include="7z\LzFind.c" />
-    <ClCompile Include="7z\MyWindows.cpp" />
-    <ClCompile Include="7z\OutBuffer.cpp" />
-    <ClCompile Include="7z\Sort.c" />
-    <ClCompile Include="7z\StreamObjects.cpp" />
-    <ClCompile Include="7z\StreamUtils.cpp" />
     <ClCompile Include="eboot.cpp" />
     <ClCompile Include="libkirk\aes.cpp" />
     <ClCompile Include="libkirk\amctrl.cpp" />
@@ -165,34 +153,18 @@
     <ClCompile Include="sign_np.cpp" />
     <ClCompile Include="tlzrc.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="zopfli\blocksplitter.c" />
+    <ClCompile Include="zopfli\cache.c" />
+    <ClCompile Include="zopfli\deflate.c" />
+    <ClCompile Include="zopfli\gzip_container.c" />
+    <ClCompile Include="zopfli\hash.c" />
+    <ClCompile Include="zopfli\katajainen.c" />
+    <ClCompile Include="zopfli\lz77.c" />
+    <ClCompile Include="zopfli\squeeze.c" />
+    <ClCompile Include="zopfli\tree.c" />
+    <ClCompile Include="zopfli\util.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="7z\7zdeflate.h" />
-    <ClInclude Include="7z\Alloc.h" />
-    <ClInclude Include="7z\BitlEncoder.h" />
-    <ClInclude Include="7z\Buffer.h" />
-    <ClInclude Include="7z\ComTry.h" />
-    <ClInclude Include="7z\CopyCoder.h" />
-    <ClInclude Include="7z\DeflateConst.h" />
-    <ClInclude Include="7z\DeflateEncoder.h" />
-    <ClInclude Include="7z\Defs.h" />
-    <ClInclude Include="7z\DynamicBuffer.h" />
-    <ClInclude Include="7z\HuffEnc.h" />
-    <ClInclude Include="7z\ICoder.h" />
-    <ClInclude Include="7z\IDecl.h" />
-    <ClInclude Include="7z\IStream.h" />
-    <ClInclude Include="7z\LimitedStreams.h" />
-    <ClInclude Include="7z\LzFind.h" />
-    <ClInclude Include="7z\LzHash.h" />
-    <ClInclude Include="7z\MyCom.h" />
-    <ClInclude Include="7z\MyException.h" />
-    <ClInclude Include="7z\MyUnknown.h" />
-    <ClInclude Include="7z\MyWindows.h" />
-    <ClInclude Include="7z\OutBuffer.h" />
-    <ClInclude Include="7z\Sort.h" />
-    <ClInclude Include="7z\StreamObjects.h" />
-    <ClInclude Include="7z\StreamUtils.h" />
-    <ClInclude Include="7z\Types.h" />
     <ClInclude Include="eboot.h" />
     <ClInclude Include="elftypes.h" />
     <ClInclude Include="libkirk\aes.h" />

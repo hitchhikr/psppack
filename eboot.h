@@ -9,6 +9,7 @@
 #include <string.h>
 #include "libkirk/kirk_engine.h"
 #include "libkirk/psp_headers.h"
+#include "zopfli/gzip_container.h"
 
 #include "utils.h"
 

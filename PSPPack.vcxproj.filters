@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="eboot.cpp" />
+    <ClCompile Include="libkirk\aes.cpp" />
+    <ClCompile Include="libkirk\amctrl.cpp" />
+    <ClCompile Include="libkirk\bn.cpp" />
+    <ClCompile Include="libkirk\ec.cpp" />
+    <ClCompile Include="libkirk\kirk_engine.cpp" />
+    <ClCompile Include="libkirk\sha1.cpp" />
+    <ClCompile Include="sign_np.cpp" />
+    <ClCompile Include="tlzrc.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="zopfli\blocksplitter.c">
+      <Filter>zopfli</Filter>
+    </ClCompile>
+    <ClCompile Include="zopfli\cache.c">
+      <Filter>zopfli</Filter>
+    </ClCompile>
+    <ClCompile Include="zopfli\deflate.c">
+      <Filter>zopfli</Filter>
+    </ClCompile>
+    <ClCompile Include="zopfli\gzip_container.c">
+      <Filter>zopfli</Filter>
+    </ClCompile>
+    <ClCompile Include="zopfli\hash.c">
+      <Filter>zopfli</Filter>
+    </ClCompile>
+    <ClCompile Include="zopfli\katajainen.c">
+      <Filter>zopfli</Filter>
+    </ClCompile>
+    <ClCompile Include="zopfli\lz77.c">
+      <Filter>zopfli</Filter>
+    </ClCompile>
+    <ClCompile Include="zopfli\squeeze.c">
+      <Filter>zopfli</Filter>
+    </ClCompile>
+    <ClCompile Include="zopfli\tree.c">
+      <Filter>zopfli</Filter>
+    </ClCompile>
+    <ClCompile Include="zopfli\util.c">
+      <Filter>zopfli</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="eboot.h" />
+    <ClInclude Include="elftypes.h" />
+    <ClInclude Include="libkirk\aes.h" />
+    <ClInclude Include="libkirk\amctrl.h" />
+    <ClInclude Include="libkirk\kirk_engine.h" />
+    <ClInclude Include="libkirk\psp_headers.h" />
+    <ClInclude Include="libkirk\sha1.h" />
+    <ClInclude Include="pgd.h" />
+    <ClInclude Include="sign_np.h" />
+    <ClInclude Include="tlzrc.h" />
+    <ClInclude Include="types.h" />
+    <ClInclude Include="utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="zopfli">
+      <UniqueIdentifier>{f4c26a9b-2554-461f-b663-cd37a984f581}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

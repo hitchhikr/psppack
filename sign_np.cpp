@@ -7,8 +7,8 @@
 
 void print_usage()
 {
-	printf("Usage: PSPPack [-1..5] [-NAME] <input>\n\n");
-	printf("[-1..5]: Number of compression passes (default: 5)\n");
+	printf("Usage: PSPPack [-1..] [-NAME] <input>\n\n");
+	printf("[-1..]: Number of compression passes (default: 15)\n");
 	printf("[-NAME]: 5 chars name (or less) to be displayed in the XMB (default: HITCH)\n");
 	printf("<input>: A valid PRX file (a packed & signed EBOOT.PBP will be produced from it).\n\n");
 }
@@ -40,13 +40,13 @@ unsigned char EBOOT_Dats[] =
 
 int main(int argc, char *argv[])
 {
-	int passes = 5;
+	int passes = 15;
 	int arg = 1;
 	int i;
 	int j;
 
-	printf("PSPPack v1.4\n");
-	printf("Written by hitchhikr of Rebels.\n\n");
+	printf("PSPPack v1.5\n");
+	printf("Written by hitchhikr of Neural.\n\n");
 
 	if ((argc <= 1) || (argc > 4))
 	{
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 				printf("Error: Invalid argument.\n");
 				return 1;
 			}
-			if (argv[arg][1] < '1' || argv[arg][1] > '5')
+			if (argv[arg][1] < '1' || argv[arg][1] > '9')
 			{
 				j = 0;
 				EBOOT_Dats[320] = ' ';
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 			else
 			{
 				passes = atol(&argv[arg][1]);
-				if (passes <= 0 || passes > 5)
+				if (passes < 1)
 				{
 					printf("Error: Invalid number of passes.\n");
 					return 1;
@@ -102,22 +102,19 @@ int main(int argc, char *argv[])
 	// Open files.
 	char *elf_name = argv[arg];
 	FILE* elf = fopen(elf_name, "rb");
-	FILE* bin = fopen("EBOOT.PBP", "wb");
 	// Check input file.
 	if (elf == NULL)
 	{
 		printf("ERROR: Please check your input file!\n");
-		fclose(elf);
-		fclose(bin);
 		return 1;
 	}
 		
-	// Check output file.
-	if (bin == NULL)
+	FILE* bin = fopen("EBOOT.PBP", "wb");
+    // Check output file.
+    if (bin == NULL)
 	{
 		printf("ERROR: Please check your output file!\n");
 		fclose(elf);
-		fclose(bin);
 		return 1;
 	}
 		
@@ -145,6 +142,8 @@ int main(int argc, char *argv[])
 		printf("Error: invalid packed size.\n");
 		fclose(elf);
 		fclose(bin);
+	    free(seboot_buf);
+	    free(elf_buf);
 		return 1;
 	}
 
